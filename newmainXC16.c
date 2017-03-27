@@ -10,6 +10,7 @@
 #include "timer.h"
 #include "adc.h"
 #include <libpic30.h>
+#include "motorSource.c"
 #include "Motor1.h"
 //#include "config.h"
 

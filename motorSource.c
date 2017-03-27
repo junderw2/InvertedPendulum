@@ -1,22 +1,15 @@
-
-
-/* 
- * File:   Motor.h
- * Author: Josh Underwood   
- * Comments: For controlling a stepper motor
- * Revision history: Mar 25 2017
- */
-
 /*
- * NOTE - THIS CODE ONLY ALLOWS RB PINS TO BE USED AS THE OUTPUTS
+ * File:   motorSource.c
+ * Author: Josh
+ *
+ * Created on March 26, 2017, 11:33 PM
  */
+#include <xc.h>
+#include <p33FJ128MC802.h>
+#include "timer.h"
+#include "adc.h"
+#include <libpic30.h>
 
-// This is a guard condition so that contents of this file are not included
-// more than once.  
-#ifndef XC_HEADER_TEMPLATE_H
-#define	XC_HEADER_TEMPLATE_H
-
-#include <xc.h> // include processor files - each processor file is guarded.  
 
 // TODO Insert appropriate #include <>
 enum microStepping {
@@ -66,7 +59,7 @@ void setVelocity(int);
     unsigned LOW;
     unsigned INPUT;
     unsigned OUTPUT;
-    unsigned long count1us=0;
+    unsigned long count1us;
 
 void Stepper_motor(int step_to_rev, unsigned dPin, unsigned sPin, int mSpeed, enum controls con,enum microStepping stepChoice, unsigned ePin, unsigned inMS0, unsigned inMS1, unsigned inMS2) {
       steps_per_rev = step_to_rev;
@@ -399,43 +392,3 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void) {
     IFS0bits.T2IF = 0; // Reset Timer1 interrupt flag
     EnableIntT2; // Enable Timer1 interrupt
 }
-      
-// TODO Insert declarations
-
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
-
-    <p><b>Description:</b></p>
-
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
- */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
-
-#ifdef	__cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
-
-#ifdef	__cplusplus
-}
-#endif /* __cplusplus */
-
-#endif	/* XC_HEADER_TEMPLATE_H */
-
