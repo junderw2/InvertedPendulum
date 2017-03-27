@@ -4,7 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>newxc16_header.h</itemPath>
+      <itemPath>motor.h</itemPath>
+      <itemPath>Motor1.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -161,6 +162,8 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <item path="motor.h" ex="true" overriding="false">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

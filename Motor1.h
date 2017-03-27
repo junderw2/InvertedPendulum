@@ -19,8 +19,6 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 
 // TODO Insert appropriate #include <>
-
-
 enum microStepping {
   FULL,
   HALF,
@@ -33,34 +31,44 @@ enum controls {
   POSITION,
   VELOCITY
 };
-
 //Stepper Motor Class
-//Stepper Motor Class
-class Stepper_motor {
-  private:
+void InitMotorTimer();
+ void Stepper_motor(int, unsigned, unsigned, int,enum controls,enum microStepping, unsigned , unsigned , unsigned , unsigned );
+ void setStepping(enum microStepping);
+void setPosition(long);
+void setVelocity(int);
+  int min (int, int);
+  int abs (int);
+   void setControl(enum controls);
+   void sendStep();
+  void sendDir(unsigned);
+  void digitalWrite(unsigned, unsigned);
+  void pinMode(unsigned, unsigned);
+   void runOverhead();
+   
     int steps_per_rev;
     int actual_steps_per_rev;
     unsigned dirPin;
     unsigned stepPin;
     double maxSpeed; //RPS
-    bool dir; // 0 - CW, 1 - CCW
-    controls controlType; //0 - position, 1 - velocity
+    unsigned dir; // 0 - CW, 1 - CCW
+    enum controls controlType; //0 - position, 1 - velocity
     double deltaT;
     double goPosition;
     double velocity; //RPS
     unsigned long lastStep;
     const int pulseLength = 1; //microseconds
-    microStepping curStepping;
+    enum microStepping curStepping;
     unsigned MS0, MS1, MS2;
     double curPosition; //ticks
     int multiplier;
-    bool HIGH;
-    bool LOW;
-    bool INPUT;
-    bool OUTPUT;
-  public:
+    unsigned HIGH;
+    unsigned LOW;
+    unsigned INPUT;
+    unsigned OUTPUT;
+    unsigned long count1us;
 
-    Stepper_motor(int step_to_rev, unsigned dPin, unsigned sPin, int mSpeed, controls con, microStepping stepChoice, unsigned ePin, unsigned inMS0, unsigned inMS1, unsigned inMS2) {
+void Stepper_motor(int step_to_rev, unsigned dPin, unsigned sPin, int mSpeed, enum controls con,enum microStepping stepChoice, unsigned ePin, unsigned inMS0, unsigned inMS1, unsigned inMS2) {
       steps_per_rev = step_to_rev;
       dirPin = dPin;
       stepPin = sPin;
@@ -80,6 +88,7 @@ class Stepper_motor {
       HIGH=1;
       OUTPUT = 0;
       INPUT=1;
+      count1us =0;
       
       pinMode(stepPin, OUTPUT);      
       pinMode(ePin, OUTPUT);
@@ -89,19 +98,32 @@ class Stepper_motor {
       pinMode(MS0, OUTPUT);
       pinMode(MS1, OUTPUT);
       pinMode(MS2, OUTPUT);
+      
+    //  InitMotorTimer();
+    }
+    
+    void InitMotorTimer()
+    {
+        //    T2CON = 0b011111100;
+    // Prescaler = 1:8
+        //counting at 5MHz - 5 counts = 1 micro second
+    // Period = 0x0FFF
+    OpenTimer2(T2_ON & T2_PS_1_8  & T2_SOURCE_INT & T2_GATE_OFF & T2_IDLE_STOP, 0x0FFF);
+    // Turn Timer1 interrupt ON
+    ConfigIntTimer2(T2_INT_PRIOR_7 & T2_INT_ON);
     }
 
-    void setStepping(microStepping stepChoice) {
-      bool MSBPin = false;
-      bool midSBPin = false;
-      bool LSBPin = false;
+    void setStepping(enum microStepping stepChoice) {
+      unsigned MSBPin = 0;
+      unsigned midSBPin = 0;
+      unsigned LSBPin = 0;
       switch (stepChoice) {
         case FULL:
           multiplier = 1;
           break;
         case HALF:
           multiplier = 2;
-          LSBPin = true;
+          LSBPin = 1;
           break;
         case QUARTER:
           multiplier = 4; //**************************needs implementation
@@ -111,9 +133,9 @@ class Stepper_motor {
           break;
         case SIXTEENTH:
           multiplier = 16;
-          MSBPin = true;
-          midSBPin = true;
-          LSBPin = true;
+          MSBPin = 1;
+          midSBPin = 1;
+          LSBPin = 1;
           break;
           digitalWrite(MS0, MSBPin);
           digitalWrite(MS1, midSBPin);
@@ -144,21 +166,25 @@ class Stepper_motor {
         if (val <0) return (val*-1);
         else return val;
     }
-    void setControl(controls input) {
+    void setControl(enum controls input) {
       controlType = input;
     }
 
     void sendStep() { // needs converted to interrupts
       digitalWrite(stepPin, HIGH);
-     __delay_us(2); // Still uses the DELAY
+      int now = count1us;
+      while (1)
+      {
+          if (count1us>(2+now)) break;
+      }// Still uses the DELAY
       digitalWrite(stepPin, LOW);
     }
 
-    void sendDir(bool setD) { //
+    void sendDir(unsigned setD) { //
       digitalWrite(dirPin, setD);
     }
 
-    void digitalWrite(unsigned pin, bool highLow)
+    void digitalWrite(unsigned pin, unsigned highLow)
     {
         switch(pin)
         {  
@@ -245,7 +271,7 @@ class Stepper_motor {
             
         }
     }
-    void pinMode(unsigned pin, bool inOut)
+    void pinMode(unsigned pin, unsigned inOut)
     {
         switch(pin)
         {  
@@ -347,7 +373,7 @@ class Stepper_motor {
       }
 
       //runStepControl
-      if (deltaT < (micros() - lastStep) && (goPosition - curPosition != 0)) { //limit velocity
+      if (deltaT < (count1us - lastStep) && (goPosition - curPosition != 0)) { //limit velocity
 
         //set step direction
         if (goPosition - curPosition > 0) {
@@ -360,12 +386,18 @@ class Stepper_motor {
 
         sendStep();
 
-        lastStep = micros();
+        lastStep = count1us;
       }
     }
 
-};
 
+void __attribute__((interrupt, auto_psv)) _T2Interrupt(void) {
+    DisableIntT2; // Disable Timer1 interrupt     
+    WriteTimer2(5); // Setup Timer1 with the appropriate value to set the interrupt time
+    IFS0bits.T2IF = 0; // Reset Timer1 interrupt flag
+    count1us++;
+    EnableIntT2; // Enable Timer1 interrupt
+}
       
 // TODO Insert declarations
 

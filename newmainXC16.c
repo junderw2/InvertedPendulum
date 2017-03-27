@@ -10,6 +10,7 @@
 #include "timer.h"
 #include "adc.h"
 #include <libpic30.h>
+#include "Motor1.h"
 //#include "config.h"
 
 //configuration bits
@@ -27,34 +28,41 @@ unsigned int TmrState = 0;		// Variable used to store whether square wave is ON 
 unsigned int TmrVal = 0;		// Variable to store the value used to setup Timer1 which controls
 unsigned int period =4096;
 unsigned int temp=0;
-
+int potPosition = 0;
+int potPosition1 = 0;
 void InitIO(void);
 void ADC(void);
 void InitTimer(void);
+double map(double value, float x_min, float x_max, float y_min, float y_max); 
 
 int main(void) {
     InitIO(); // Call InitIO which configures the input and output pins
     InitTimer(); // Call InitTimer which configures the timer and its interrupt
-
+Stepper_motor(200, 10, 11, 2, POSITION, HALF, 12, 13, 14, 15);
     while (1) // Infinite loop
     {
+       ADC(); // Call ADC which configures and reads analog inputs 0 and 1 (AN0 and AN1)
+       potPosition = (map(potPosition1, 0, 1023, 0, 360 * 1.8) + potPosition * 9)/10;
+       setPosition(potPosition);
+       runOverhead();
         
-        //   LATBbits.LATB13 = 1; // Turn ON Output to set high signal for RB13
-     //   Delay_1S_Cnt();
-      //     LATBbits.LATB13 =0;
-        //   delay(1000);
-        
-        ADC(); // Call ADC which configures and reads analog inputs 0 and 1 (AN0 and AN1)
+        // 
     }
     return 0;
 }
 
 
+
+double map(double value, float x_min, float x_max, float y_min, float y_max)    
+{                    
+    return (y_min + (((y_max - y_min)/(x_max - x_min)) * (value - x_min))); 
+}  
+
 /*********************************************************************************************************/
 void InitIO(void) {
     TRISAbits.TRISA0 = 1; // Set RA0 (AN0) as input
-    TRISAbits.TRISA1 = 1; // Set RA1 (AN1) as input
-    TRISBbits.TRISB13 = 0; // Set RB13 as output which is used to generate the square wave signal				
+    //TRISAbits.TRISA1 = 1; // Set RA1 (AN1) as input
+    //TRISBbits.TRISB13 = 0; // Set RB13 as output which is used to generate the square wave signal				
 }
 
 /*********************************************************************************************************/
@@ -82,36 +90,14 @@ void ADC(void) { // 12-bit sampling
             ADC_VREF_AVDD_AVSS & ADC_SCAN_OFF & ADC_ALT_INPUT_OFF,
             ADC_SAMPLE_TIME_31 & ADC_CONV_CLK_INTERNAL_RC,
             ADC_DMA_BUF_LOC_1,
-            ENABLE_AN4_ANA, //changed to an4 from an0, now uses photoresistor
-            0,
-            0,
-            0);
+            ENABLE_AN0_ANA, //changed to an4 from an0, now uses photoresistor
+            0,0,0);
     
-    SetChanADC1(0, ADC_CH0_NEG_SAMPLEA_VREFN & ADC_CH0_POS_SAMPLEA_AN4); //also changed to an4 from an0
+    SetChanADC1(0, ADC_CH0_NEG_SAMPLEA_VREFN & ADC_CH0_POS_SAMPLEA_AN0); //also changed to an4 from an0
     AD1CON1bits.ADON = 1; // Turn on ADC hardware module
     while (AD1CON1bits.DONE == 0); // Wait until conversion is done
-    ONTime = (ReadADC1(0)-720)*4096.0/3376.0;
-    if (ONTime<0) ONTime=0;
-  //  ONTime = 1000;
-    //degrees = ONTime * 180.0 / 4095.0; // ONTime = converted results
-    AD1CON1bits.ADON = 0; // Turn off ADC hardware module
-
-
-    OpenADC1(ADC_MODULE_OFF & ADC_AD12B_12BIT & ADC_FORMAT_INTG & ADC_CLK_AUTO & ADC_AUTO_SAMPLING_ON,
-            ADC_VREF_AVDD_AVSS & ADC_SCAN_OFF & ADC_ALT_INPUT_OFF,
-            ADC_SAMPLE_TIME_31 & ADC_CONV_CLK_INTERNAL_RC,
-            ADC_DMA_BUF_LOC_1,
-            ENABLE_AN1_ANA,
-            0,
-            0,
-            0);
-    // Select AN1
-    SetChanADC1(0, ADC_CH0_NEG_SAMPLEA_VREFN & ADC_CH0_POS_SAMPLEA_AN1);
-    AD1CON1bits.ADON = 1; // Turn on ADC hardware module
-    while (AD1CON1bits.DONE == 0); // Wait until conversion is done
-    temp = ReadADC1(0); // OFFTime = converted results
+    potPosition1 = ReadADC1(0);// Read pot position
     AD1CON1bits.ADON = 0; // Turn off ADC hardware module 
- 
 }
 
 /*********************************************************************************************************/
@@ -121,7 +107,7 @@ void ADC(void) { // 12-bit sampling
 // file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.25/docs/periph_libs/dsPIC30F_dsPIC33F_PIC24H_dsPIC33E_PIC24E_Timers_Help.htm
 
 /*********************************************************************************************************/
-void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
+/*void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
     DisableIntT1; // Disable Timer1 interrupt 
 
     // This IF statement will constantly switch in order to generate the square wave signal (ONTime and OFFTime)
@@ -145,3 +131,4 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0; // Reset Timer1 interrupt flag
     EnableIntT1; // Enable Timer1 interrupt
 }
+ */
