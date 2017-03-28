@@ -105,9 +105,9 @@ int main(void) {
     Stepper_motor(200, 10, 11, 2, VELOCITY, FULL, 12, 13, 14, 15);
     while (1) // Infinite loop
     {
-        //ADC(); // Call ADC which configures and reads analog inputs 0 and 1 (AN0 and AN1)
-        //potPosition = (map(potPosition1, 2417, 4086, 0, 360 * 1.8) + potPosition * 9)/10;
-        //setPosition(potPosition);
+        ADC(); // Call ADC which configures and reads analog inputs 0 and 1 (AN0 and AN1)
+        potPosition = (map(potPosition1, 2417, 4086, 0, 360 * 1.8) + potPosition * 9)/10;
+      //  setPosition(potPosition);
         setVelocity(5);
         runOverhead();
     }
@@ -451,11 +451,6 @@ void runOverhead() {
     }
 }
 
-//Timer1
-//Prescaler 1:1; PR1 Preload = 20; Actual Interrupt Time = 1 us
-
-//Place/Copy this part in declaration section
-
 void InitTimer(void) { // Prescaler = 1:1
     // Period = 0x0FFF
     T1CON = 0x8000;
@@ -466,23 +461,6 @@ void InitTimer(void) { // Prescaler = 1:1
     // Turn Timer1 interrupt ON
     ConfigIntTimer1(T1_INT_PRIOR_7 & T1_INT_ON);
 }
-
-
-/*
-void __attribute__((interrupt, auto_psv)) _T2Interrupt(void) {
-    DisableIntT2; // Disable Timer1 interrupt     
-     // Setup Timer1 with the appropriate value to set the interrupt time
-    count1us= count1us +1;
-    WriteTimer2(5);
-    IFS0bits.T2IF = 0; // Reset Timer1 interrupt flag
-    EnableIntT2; // Enable Timer1 interrupt
-}
- */
-/*********************************************************************************************************/
-// For more information on PIC24H Interrupts, see the MPLAB® XC16 C Compiler User's Guide - Chapter 14. Interrupts
-//
-// For more information on PIC24H Timers Peripheral Module Library refer to link below:
-// file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.25/docs/periph_libs/dsPIC30F_dsPIC33F_PIC24H_dsPIC33E_PIC24E_Timers_Help.htm
 
 void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
     //DisableIntT1; // Disable Timer1 interrupt 
