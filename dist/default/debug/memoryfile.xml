@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/InvertedPendulum.production.elf">
+  <executable name="dist/default/debug/InvertedPendulum.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>16384</length>
-      <used>82</used>
-      <free>16302</free>
+      <used>162</used>
+      <free>16222</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>131328</length>
-      <used>4461</used>
-      <free>126867</free>
+      <used>4317</used>
+      <free>127011</free>
     </memory>
   </executable>
 </project>

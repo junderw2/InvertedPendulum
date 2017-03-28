@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p33FJ128MC802 \
   -o \
-  dist/default/production/InvertedPendulum.production.elf \
+  dist/default/debug/InvertedPendulum.debug.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/PIC24E/gld \
@@ -16,9 +16,17 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/mainCode.o \
+  build/default/debug/mainCode.o \
+  -TC:\\Users\\JOSH-A~1\\AppData\\Local\\Temp\\tmp00001590.00 \
+  -TC:\\Users\\JOSH-A~1\\AppData\\Local\\Temp\\tmp00001590.01 \
+  -TC:\\Users\\JOSH-A~1\\AppData\\Local\\Temp\\tmp00001590.02 \
+  -TC:\\Users\\JOSH-A~1\\AppData\\Local\\Temp\\tmp00001590.03 \
+  -TC:\\Users\\JOSH-A~1\\AppData\\Local\\Temp\\tmp00001590.04 \
   --defsym=__MPLAB_BUILD=1 \
-  -Tp33FJ128MC802.gld.00 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_PK3=1 \
+  -Tp33FJ128MC802.gld.05 \
   --stack=16 \
   --check-sections \
   --data-init \
@@ -30,10 +38,10 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/InvertedPendulum.production.map \
+  -Map=dist/default/debug/InvertedPendulum.debug.map \
   --report-mem \
   --memorysummary \
-  dist/default/production/memoryfile.xml \
+  dist/default/debug/memoryfile.xml \
   -start-group \
   --library=lega-pic30-elf \
   --library=m-elf \
@@ -43,15 +51,15 @@ Command:
 Archive member included because of file (symbol)
 
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(OpenADC1.o)
-                              build/default/production/mainCode.o (_OpenADC1)
+                              build/default/debug/mainCode.o (_OpenADC1)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(ReadADC1.o)
-                              build/default/production/mainCode.o (_ReadADC1)
+                              build/default/debug/mainCode.o (_ReadADC1)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(SetChanADC1.o)
-                              build/default/production/mainCode.o (_SetChanADC1)
+                              build/default/debug/mainCode.o (_SetChanADC1)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(ConfigIntTimer1.o)
-                              build/default/production/mainCode.o (_ConfigIntTimer1)
+                              build/default/debug/mainCode.o (_ConfigIntTimer1)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(OpenTimer1.o)
-                              build/default/production/mainCode.o (_OpenTimer1)
+                              build/default/debug/mainCode.o (_OpenTimer1)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                               (__resetPRI)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
@@ -59,17 +67,17 @@ c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(addsf3.eo)
-                              build/default/production/mainCode.o (___subsf3)
+                              build/default/debug/mainCode.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(divsf3.eo)
-                              build/default/production/mainCode.o (___divsf3)
+                              build/default/debug/mainCode.o (___divsf3)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fgtge.eo)
-                              build/default/production/mainCode.o (___gtsf2)
+                              build/default/debug/mainCode.o (___gtsf2)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
-                              build/default/production/mainCode.o (___floatsisf)
+                              build/default/debug/mainCode.o (___floatsisf)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
-                              build/default/production/mainCode.o (___floatunsisf)
+                              build/default/debug/mainCode.o (___floatunsisf)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fne.eo)
-                              build/default/production/mainCode.o (___nesf2)
+                              build/default/debug/mainCode.o (___nesf2)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fpack.eo)
                               c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(addsf3.eo) (__fpack)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack2.eo)
@@ -77,9 +85,7 @@ c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(futil.eo)
                               c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(addsf3.eo) (__fPropagateNaN)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
-                              build/default/production/mainCode.o (___mulsf3)
-c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
-                              build/default/production/mainCode.o (___udivsi3)
+                              build/default/debug/mainCode.o (___mulsf3)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.eo)
                               c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fgtge.eo) (__fcompare)
 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
@@ -111,12 +117,12 @@ Program Memory  [Origin = 0x200, Length = 0x15600]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x450           0x678  (1656)
-.const                       0x650                 0x2             0x3  (3)
-.text                        0x652               0x73c           0xada  (2778)
-.dinit                       0xd8e                0x10            0x18  (24)
+.text                        0x200               0x430           0x648  (1608)
+.const                       0x630                 0x2             0x3  (3)
+.text                        0x632               0x6fa           0xa77  (2679)
+.dinit                       0xd2c                0x12            0x1b  (27)
 
-                 Total program memory used (bytes):         0x116d  (4461) 3%
+                 Total program memory used (bytes):         0x10dd  (4317) 3%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -136,10 +142,15 @@ Data Memory  [Origin = 0x800, Length = 0x4000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x50  (80)
-.ndata                       0x850                   0             0x2  (2)
+reserve_data_0x800           0x800                0x20            0x20  (32)
+reserve_data_0x820           0x820                 0x2             0x2  (2)
+reserve_data_0x822           0x822                 0x2             0x2  (2)
+reserve_data_0x824           0x824                 0x2             0x2  (2)
+reserve_data_0x826           0x826                0x2a            0x2a  (42)
+.nbss                        0x850                   0            0x4c  (76)
+.ndata                       0x89c                   0             0x6  (6)
 
-                 Total data memory used (bytes):           0x52  (82) <1%
+                 Total data memory used (bytes):           0xa2  (162) <1%
 
 
 Dynamic Memory Usage
@@ -147,87 +158,87 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x852                              0x3fae  (16302)
+stack                        0x8a2                              0x3f5e  (16222)
 
-                 Maximum dynamic memory (bytes):         0x3fae  (16302)
+                 Maximum dynamic memory (bytes):         0x3f5e  (16222)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _degrees
-                    0x0804                  _ONTime
-                    0x0806                  _OFFTime
-                    0x0808                  _TmrState
-                    0x080a                  _TmrVal
-                    0x080c                  _temp
-                    0x080e                  _steps_per_rev
-                    0x0810                  _actual_steps_per_rev
-                    0x0812                  _dirPin
-                    0x0814                  _stepPin
-                    0x0816                  _maxSpeed
-                    0x081a                  _dir
-                    0x081c                  _controlType
-                    0x081e                  _deltaT
-                    0x0822                  _goPosition
-                    0x0826                  _velocity
-                    0x082a                  _lastStep
-                    0x082e                  _curStepping
-                    0x0830                  _MS0
-                    0x0832                  _MS1
-                    0x0834                  _MS2
-                    0x0836                  _curPosition
-                    0x083a                  _multiplier
-                    0x083c                  _HIGH
-                    0x083e                  _LOW
-                    0x0840                  _INPUT
-                    0x0842                  _OUTPUT
-                    0x0844                  _count1us
-                    0x0848                  _micros
-                    0x084c                  _potPosition
-                    0x084e                  _potPosition1
-                    0x0850                  _period
+                    0x0850                  _degrees
+                    0x0854                  _ONTime
+                    0x0856                  _OFFTime
+                    0x0858                  _TmrState
+                    0x085a                  _TmrVal
+                    0x085c                  _temp
+                    0x085e                  _steps_per_rev
+                    0x0860                  _actual_steps_per_rev
+                    0x0862                  _dirPin
+                    0x0864                  _stepPin
+                    0x0866                  _maxSpeed
+                    0x086a                  _dir
+                    0x086c                  _controlType
+                    0x086e                  _deltaT
+                    0x0872                  _goPosition
+                    0x0876                  _velocity
+                    0x087a                  _lastStep
+                    0x087e                  _curStepping
+                    0x0880                  _MS0
+                    0x0882                  _MS1
+                    0x0884                  _MS2
+                    0x0886                  _curPosition
+                    0x088a                  _multiplier
+                    0x088c                  _LOW
+                    0x088e                  _OUTPUT
+                    0x0890                  _count1us
+                    0x0894                  _micros
+                    0x0898                  _potPosition
+                    0x089a                  _potPosition1
+                    0x089c                  _period
+                    0x089e                  _HIGH
+                    0x08a0                  _INPUT
 
 External Symbols in Data Memory (by name):
 
-                    0x083c                  _HIGH
-                    0x0840                  _INPUT
-                    0x083e                  _LOW
-                    0x0830                  _MS0
-                    0x0832                  _MS1
-                    0x0834                  _MS2
-                    0x0806                  _OFFTime
-                    0x0804                  _ONTime
-                    0x0842                  _OUTPUT
-                    0x0808                  _TmrState
-                    0x080a                  _TmrVal
-                    0x0810                  _actual_steps_per_rev
-                    0x081c                  _controlType
-                    0x0844                  _count1us
-                    0x0836                  _curPosition
-                    0x082e                  _curStepping
-                    0x0800                  _degrees
-                    0x081e                  _deltaT
-                    0x081a                  _dir
-                    0x0812                  _dirPin
-                    0x0822                  _goPosition
-                    0x082a                  _lastStep
-                    0x0816                  _maxSpeed
-                    0x0848                  _micros
-                    0x083a                  _multiplier
-                    0x0850                  _period
-                    0x084c                  _potPosition
-                    0x084e                  _potPosition1
-                    0x0814                  _stepPin
-                    0x080e                  _steps_per_rev
-                    0x080c                  _temp
-                    0x0826                  _velocity
+                    0x089e                  _HIGH
+                    0x08a0                  _INPUT
+                    0x088c                  _LOW
+                    0x0880                  _MS0
+                    0x0882                  _MS1
+                    0x0884                  _MS2
+                    0x0856                  _OFFTime
+                    0x0854                  _ONTime
+                    0x088e                  _OUTPUT
+                    0x0858                  _TmrState
+                    0x085a                  _TmrVal
+                    0x0860                  _actual_steps_per_rev
+                    0x086c                  _controlType
+                    0x0890                  _count1us
+                    0x0886                  _curPosition
+                    0x087e                  _curStepping
+                    0x0850                  _degrees
+                    0x086e                  _deltaT
+                    0x086a                  _dir
+                    0x0862                  _dirPin
+                    0x0872                  _goPosition
+                    0x087a                  _lastStep
+                    0x0866                  _maxSpeed
+                    0x0894                  _micros
+                    0x088a                  _multiplier
+                    0x089c                  _period
+                    0x0898                  _potPosition
+                    0x089a                  _potPosition1
+                    0x0864                  _stepPin
+                    0x085e                  _steps_per_rev
+                    0x085c                  _temp
+                    0x0876                  _velocity
 
 External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00023c                  __psv_init
-                  0x000252                  __data_init
                   0x000252                  __data_init_standard
+                  0x000252                  __data_init
                   0x0002c8                  __DefaultInterrupt
                   0x0002cc                  _OpenADC1
                   0x0002e4                  _ReadADC1
@@ -248,83 +259,81 @@ External Symbols in Program Memory (by address):
                   0x0004dc                  __fbopExit
                   0x0004e4                  __fbopReturnNaN
                   0x0004ea                  ___mulsf3
-                  0x000552                  ___udivsi3
-                  0x000572                  __fcompare
-                  0x0005a8                  ___floatdisf
-                  0x0005c8                  ___floatundisf
-                  0x000626                  __funpack
-                  0x000650                  _pulseLength
-                  0x000652                  _main
-                  0x0006ca                  _map
-                  0x000714                  _InitIO
-                  0x00071c                  _ADC
-                  0x00074e                  _Stepper_motor
-                  0x0007fc                  _setStepping
-                  0x00085c                  _setPosition
-                  0x00086c                  _setVelocity
-                  0x0008b8                  _min
-                  0x0008d0                  _abs
-                  0x0008e4                  _setControl
-                  0x0008f0                  _sendStep
-                  0x000932                  _sendDir
-                  0x000940                  _digitalWrite
-                  0x000ad8                  _pinMode
-                  0x000c70                  _runOverhead
-                  0x000d4e                  _InitTimer
-                  0x000d6e                  __T1Interrupt
+                  0x000552                  __fcompare
+                  0x000588                  ___floatdisf
+                  0x0005a8                  ___floatundisf
+                  0x000606                  __funpack
+                  0x000630                  _pulseLength
+                  0x000632                  _main
+                  0x00067c                  _map
+                  0x0006c6                  _InitIO
+                  0x0006ce                  _ADC
+                  0x000700                  _Stepper_motor
+                  0x0007ae                  _setStepping
+                  0x00080e                  _setPosition
+                  0x00081e                  _setVelocity
+                  0x00086a                  _min
+                  0x000882                  _abs
+                  0x000896                  _setControl
+                  0x0008a2                  _sendStep
+                  0x0008d0                  _sendDir
+                  0x0008de                  _digitalWrite
+                  0x000a76                  _pinMode
+                  0x000c0e                  _runOverhead
+                  0x000cec                  _InitTimer
+                  0x000d0c                  __T1Interrupt
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x00071c                  _ADC
+                  0x0006ce                  _ADC
                   0x0002f4                  _ConfigIntTimer1
-                  0x000714                  _InitIO
-                  0x000d4e                  _InitTimer
+                  0x0006c6                  _InitIO
+                  0x000cec                  _InitTimer
                   0x0002cc                  _OpenADC1
                   0x000312                  _OpenTimer1
                   0x0002e4                  _ReadADC1
                   0x0002ee                  _SetChanADC1
-                  0x00074e                  _Stepper_motor
+                  0x000700                  _Stepper_motor
                   0x0002c8                  __DefaultInterrupt
                   0xf80004                  __FGS.sec
-                  0x000d6e                  __T1Interrupt
+                  0x000d0c                  __T1Interrupt
                   0x00031e                  ___addsf3
                   0x0003d8                  ___divsf3
-                  0x0005a8                  ___floatdisf
+                  0x000588                  ___floatdisf
                   0x000460                  ___floatsisf
-                  0x0005c8                  ___floatundisf
+                  0x0005a8                  ___floatundisf
                   0x000466                  ___floatunsisf
                   0x00045c                  ___gesf2
                   0x00045c                  ___gtsf2
                   0x0004ea                  ___mulsf3
                   0x00046a                  ___nesf2
                   0x00031c                  ___subsf3
-                  0x000552                  ___udivsi3
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x0004ca                  __fPropagateNaN
                   0x0004dc                  __fbopExit
                   0x0004e4                  __fbopReturnNaN
-                  0x000572                  __fcompare
+                  0x000552                  __fcompare
                   0x00046e                  __fpack
-                  0x000626                  __funpack
+                  0x000606                  __funpack
                   0x0004ba                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0008d0                  _abs
-                  0x000940                  _digitalWrite
-                  0x000652                  _main
-                  0x0006ca                  _map
-                  0x0008b8                  _min
-                  0x000ad8                  _pinMode
-                  0x000650                  _pulseLength
-                  0x000c70                  _runOverhead
-                  0x000932                  _sendDir
-                  0x0008f0                  _sendStep
-                  0x0008e4                  _setControl
-                  0x00085c                  _setPosition
-                  0x0007fc                  _setStepping
-                  0x00086c                  _setVelocity
+                  0x000882                  _abs
+                  0x0008de                  _digitalWrite
+                  0x000632                  _main
+                  0x00067c                  _map
+                  0x00086a                  _min
+                  0x000a76                  _pinMode
+                  0x000630                  _pulseLength
+                  0x000c0e                  _runOverhead
+                  0x0008d0                  _sendDir
+                  0x0008a2                  _sendStep
+                  0x000896                  _setControl
+                  0x00080e                  _setPosition
+                  0x0007ae                  _setStepping
+                  0x00081e                  _setVelocity
 
 Memory Configuration
 
@@ -351,8 +360,36 @@ FUID3            0xf80016           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/mainCode.o
+LOAD build/default/debug/mainCode.o
+
+reserve_data_0x800
+                    0x0800         0x20
+                    0x0820                  . = 0x20
+ *fill*             0x0800         0x2000
+
+reserve_data_0x820
+                    0x0820          0x2
+                    0x0822                  . = 0x2
+ *fill*             0x0820          0x200
+
+reserve_data_0x822
+                    0x0822          0x2
+                    0x0824                  . = 0x2
+ *fill*             0x0822          0x200
+
+reserve_data_0x824
+                    0x0824          0x2
+                    0x0826                  . = 0x2
+ *fill*             0x0824          0x200
+
+reserve_data_0x826
+                    0x0826         0x2a
+                    0x0850                  . = 0x2a
+ *fill*             0x0826         0x2a00
                     0x0001                  __MPLAB_BUILD = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_PK3 = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
@@ -383,7 +420,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x450
+.text             0x000200        0x430
  *(.init)
  .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
@@ -447,19 +484,17 @@ LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libfx-elf.a
                   0x0004e4                  __fbopReturnNaN
  .libm.mulsf3     0x0004ea         0x68 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
                   0x0004ea                  ___mulsf3
- .libm.udivsi3    0x000552         0x20 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
-                  0x000552                  ___udivsi3
  .libm.fcompare
-                  0x000572         0x36 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.eo)
-                  0x000572                  __fcompare
+                  0x000552         0x36 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.eo)
+                  0x000552                  __fcompare
  .libm.floatdisf
-                  0x0005a8         0x20 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
-                  0x0005a8                  ___floatdisf
+                  0x000588         0x20 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+                  0x000588                  ___floatdisf
  .libm.floatundisf
-                  0x0005c8         0x5e c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
-                  0x0005c8                  ___floatundisf
- .libm.funpack    0x000626         0x2a c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.eo)
-                  0x000626                  __funpack
+                  0x0005a8         0x5e c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+                  0x0005a8                  ___floatundisf
+ .libm.funpack    0x000606         0x2a c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x000606                  __funpack
 
 usercode
  *(usercode)
@@ -477,15 +512,15 @@ __FGS             0xf80004          0x2
 
 __FOSCSEL         0xf80006          0x2
  *(__FOSCSEL.sec*)
- __FOSCSEL.sec    0xf80006          0x2 build/default/production/mainCode.o
+ __FOSCSEL.sec    0xf80006          0x2 build/default/debug/mainCode.o
 
 __FOSC            0xf80008          0x2
  *(__FOSC.sec*)
- __FOSC.sec       0xf80008          0x2 build/default/production/mainCode.o
+ __FOSC.sec       0xf80008          0x2 build/default/debug/mainCode.o
 
 __FWDT            0xf8000a          0x2
  *(__FWDT.sec*)
- __FWDT.sec       0xf8000a          0x2 build/default/production/mainCode.o
+ __FWDT.sec       0xf8000a          0x2 build/default/debug/mainCode.o
 
 __FPOR
  *(__FPOR.sec*)
@@ -508,26 +543,26 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x147f
+.debug_info       0x000000       0x147a
  *(.debug_info)
- .debug_info      0x000000       0x147f build/default/production/mainCode.o
+ .debug_info      0x000000       0x147a build/default/debug/mainCode.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x203
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x203 build/default/production/mainCode.o
+ .debug_abbrev    0x000000        0x203 build/default/debug/mainCode.o
 
-.debug_line       0x000000        0x1a5
+.debug_line       0x000000        0x199
  *(.debug_line)
- .debug_line      0x000000        0x1a5 build/default/production/mainCode.o
+ .debug_line      0x000000        0x199 build/default/debug/mainCode.o
 
-.debug_frame      0x000000        0x226
+.debug_frame      0x000000        0x234
  *(.debug_frame)
- .debug_frame     0x000000        0x226 build/default/production/mainCode.o
+ .debug_frame     0x000000        0x234 build/default/debug/mainCode.o
 
 .debug_str        0x000000         0xc0
  *(.debug_str)
- .debug_str       0x000000         0xc0 build/default/production/mainCode.o
+ .debug_str       0x000000         0xc0 build/default/debug/mainCode.o
 
 .debug_loc
  *(.debug_loc)
@@ -539,7 +574,7 @@ __FUID3
                   0x000000        0x2c6
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x2c6 build/default/production/mainCode.o
+                  0x000000        0x2c6 build/default/debug/mainCode.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -547,7 +582,7 @@ __FUID3
 .debug_aranges    0x000000         0x18
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/mainCode.o
+                  0x000000         0x18 build/default/debug/mainCode.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1633,7 +1668,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/InvertedPendulum.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/InvertedPendulum.debug.elf elf32-pic30)
 LOAD FGS
 LOAD default_isr
 LOAD data_init
@@ -1641,12 +1676,12 @@ LOAD data_init
 .debug_pubtypes
                   0x000018        0x10e
  .debug_pubtypes
-                  0x000018        0x10e build/default/production/mainCode.o
+                  0x000018        0x10e build/default/debug/mainCode.o
 
 __c30_signature
-                  0x000126         0x8a
+                  0x000126         0x84
  __c30_signature
-                  0x000126          0x6 build/default/production/mainCode.o
+                  0x000126          0x6 build/default/debug/mainCode.o
  __c30_signature
                   0x00012c          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib/dsPIC33F\libp33FJ128MC802-elf.a(OpenADC1.o)
  __c30_signature
@@ -1682,83 +1717,81 @@ __c30_signature
  __c30_signature
                   0x00018c          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
  __c30_signature
-                  0x000192          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x000192          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.eo)
  __c30_signature
-                  0x000198          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(fcompare.eo)
+                  0x000198          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
  __c30_signature
-                  0x00019e          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+                  0x00019e          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
  __c30_signature
-                  0x0001a4          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
- __c30_signature
-                  0x0001aa          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x0001a4          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(funpack.eo)
 
-.nbss               0x0800         0x50
- .nbss              0x0800         0x50 build/default/production/mainCode.o
-                    0x0800                  _degrees
-                    0x0804                  _ONTime
-                    0x0806                  _OFFTime
-                    0x0808                  _TmrState
-                    0x080a                  _TmrVal
-                    0x080c                  _temp
-                    0x080e                  _steps_per_rev
-                    0x0810                  _actual_steps_per_rev
-                    0x0812                  _dirPin
-                    0x0814                  _stepPin
-                    0x0816                  _maxSpeed
-                    0x081a                  _dir
-                    0x081c                  _controlType
-                    0x081e                  _deltaT
-                    0x0822                  _goPosition
-                    0x0826                  _velocity
-                    0x082a                  _lastStep
-                    0x082e                  _curStepping
-                    0x0830                  _MS0
-                    0x0832                  _MS1
-                    0x0834                  _MS2
-                    0x0836                  _curPosition
-                    0x083a                  _multiplier
-                    0x083c                  _HIGH
-                    0x083e                  _LOW
-                    0x0840                  _INPUT
-                    0x0842                  _OUTPUT
-                    0x0844                  _count1us
-                    0x0848                  _micros
-                    0x084c                  _potPosition
-                    0x084e                  _potPosition1
+.nbss               0x0850         0x4c
+ .nbss              0x0850         0x4c build/default/debug/mainCode.o
+                    0x0850                  _degrees
+                    0x0854                  _ONTime
+                    0x0856                  _OFFTime
+                    0x0858                  _TmrState
+                    0x085a                  _TmrVal
+                    0x085c                  _temp
+                    0x085e                  _steps_per_rev
+                    0x0860                  _actual_steps_per_rev
+                    0x0862                  _dirPin
+                    0x0864                  _stepPin
+                    0x0866                  _maxSpeed
+                    0x086a                  _dir
+                    0x086c                  _controlType
+                    0x086e                  _deltaT
+                    0x0872                  _goPosition
+                    0x0876                  _velocity
+                    0x087a                  _lastStep
+                    0x087e                  _curStepping
+                    0x0880                  _MS0
+                    0x0882                  _MS1
+                    0x0884                  _MS2
+                    0x0886                  _curPosition
+                    0x088a                  _multiplier
+                    0x088c                  _LOW
+                    0x088e                  _OUTPUT
+                    0x0890                  _count1us
+                    0x0894                  _micros
+                    0x0898                  _potPosition
+                    0x089a                  _potPosition1
 
-.ndata              0x0850          0x2
- .ndata             0x0850          0x2 build/default/production/mainCode.o
-                    0x0850                  _period
+.ndata              0x089c          0x6
+ .ndata             0x089c          0x6 build/default/debug/mainCode.o
+                    0x089c                  _period
+                    0x089e                  _HIGH
+                    0x08a0                  _INPUT
 
 .ivt._T1Interrupt
                   0x00001a          0x2
  .ivt._T1Interrupt
-                  0x00001a          0x2 build/default/production/mainCode.o
+                  0x00001a          0x2 build/default/debug/mainCode.o
 
-.const              0x8650          0x2 load address 0x000650  
- .const             0x8650          0x2 build/default/production/mainCode.o
-                    0x8650                  _pulseLength
+.const              0x8630          0x2 load address 0x000630  
+ .const             0x8630          0x2 build/default/debug/mainCode.o
+                    0x8630                  _pulseLength
 
-.text             0x000652        0x73c
- .text            0x000652        0x73c build/default/production/mainCode.o
-                  0x000652                  _main
-                  0x0006ca                  _map
-                  0x000714                  _InitIO
-                  0x00071c                  _ADC
-                  0x00074e                  _Stepper_motor
-                  0x0007fc                  _setStepping
-                  0x00085c                  _setPosition
-                  0x00086c                  _setVelocity
-                  0x0008b8                  _min
-                  0x0008d0                  _abs
-                  0x0008e4                  _setControl
-                  0x0008f0                  _sendStep
-                  0x000932                  _sendDir
-                  0x000940                  _digitalWrite
-                  0x000ad8                  _pinMode
-                  0x000c70                  _runOverhead
-                  0x000d4e                  _InitTimer
-                  0x000d6e                  __T1Interrupt
+.text             0x000632        0x6fa
+ .text            0x000632        0x6fa build/default/debug/mainCode.o
+                  0x000632                  _main
+                  0x00067c                  _map
+                  0x0006c6                  _InitIO
+                  0x0006ce                  _ADC
+                  0x000700                  _Stepper_motor
+                  0x0007ae                  _setStepping
+                  0x00080e                  _setPosition
+                  0x00081e                  _setVelocity
+                  0x00086a                  _min
+                  0x000882                  _abs
+                  0x000896                  _setControl
+                  0x0008a2                  _sendStep
+                  0x0008d0                  _sendDir
+                  0x0008de                  _digitalWrite
+                  0x000a76                  _pinMode
+                  0x000c0e                  _runOverhead
+                  0x000cec                  _InitTimer
+                  0x000d0c                  __T1Interrupt
 
-.dinit            0x000d8e         0x10
- .dinit           0x000d8e         0x10 data_init
+.dinit            0x000d2c         0x12
+ .dinit           0x000d2c         0x12 data_init
