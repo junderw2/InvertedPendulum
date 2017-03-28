@@ -4,16 +4,14 @@
  *
  * Created on March 25, 2017, 6:19 PM
  */
-//#define FOSC (80000000ULL)
-//#define FCY (FOSC/2)
 
 #include <xc.h>
-#include <p33FJ128MC802.h>
+#include "build/../p33FJ128MC802.h"
 #include "timer.h"
 #include "adc.h"
-#include <libpic30.h>
-#include <stdio.h>
-#include <stdlib.h>
+//#include <libpic30.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 //configuration bits
 //_FOSCSEL(FNOSC_PRI & IESO_OFF);
