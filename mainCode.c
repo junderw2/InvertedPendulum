@@ -59,7 +59,7 @@ unsigned long micros = 0;
 
 int potPosition = 0;
 int potPosition1 = 0;
-/*These funtions are standalone and are defined in the supporting files*/
+/*These functions are standalone and are defined in the supporting files*/
 double map(double value, float x_min, float x_max, float y_min, float y_max);
 int min(int, int);
 int abs(int);
