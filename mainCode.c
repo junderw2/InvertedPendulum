@@ -102,7 +102,7 @@ int main(void) {
 
     InitIO(); // Call InitIO which configures the input and output pins
     InitTimer(); // Call InitTimer which configures the timer and its interrupt
-    Stepper_motor(200, 10, 11, 2, VELOCITY, FULL, 12, 13, 14, 15);
+    Stepper_motor(200, 10, 11, 2, VELOCITY, FULL, 12, 13, 14, 15); //function sets up motor with specified pins
     while (1) // Infinite loop
     {
         ADC(); // Call ADC which configures and reads analog inputs 0 and 1 (AN0 and AN1)
@@ -113,16 +113,6 @@ int main(void) {
     }
     return 0;
 }
-
-double map(double value, float x_min, float x_max, float y_min, float y_max) {
-    return (y_min + (((y_max - y_min) / (x_max - x_min)) * (value - x_min)));
-}
-
-void InitIO(void) {
-    TRISAbits.TRISA0 = 1; // Set RA0 (AN0) as input for potentiometer
-    //TRISAbits.TRISA1 = 1; // Set RA1 (AN1) as input
-}
-
 void ADC(void) { // 12-bit sampling
     // Use dedicated ADC RC oscillator
     // Automatically start new conversion after previous
@@ -140,41 +130,82 @@ void ADC(void) { // 12-bit sampling
     potPosition1 = ReadADC1(0); // Read pot position
     AD1CON1bits.ADON = 0; // Turn off ADC hardware module 
 }
+void runOverhead() {
 
-void Stepper_motor(int step_to_rev, unsigned dPin, unsigned sPin, int mSpeed, enum controls con, enum microStepping stepChoice, unsigned ePin, unsigned inMS0, unsigned inMS1, unsigned inMS2) {
-    steps_per_rev = step_to_rev;
-    dirPin = dPin;
-    stepPin = sPin;
-    maxSpeed = mSpeed;
-    dir = 0;
-    controlType = con;
-    setStepping(stepChoice);
-    goPosition = 0;
-    curPosition = 0;
-    velocity = 0;
-    lastStep = 0;
-    deltaT = 1000000.0 / (steps_per_rev * velocity);
-    MS0 = inMS0;
-    MS1 = inMS1;
-    MS2 = inMS2;
-    LOW = 0;
-    HIGH = 1;
-    OUTPUT = 0;
-    INPUT = 1;
-    count1us = 0;
+    if (controlType) {
+        //velocity control
+        curPosition = 0;
+        switch (dir) {
+            case 0:
+                goPosition = -1;
+                break;
+            case 1:
+                goPosition = 1;
+                break;
+        }
+    }
 
-    pinMode(stepPin, OUTPUT);
-    pinMode(ePin, OUTPUT);
+    //runStepControl
+    if (deltaT < (count1us - lastStep) && (goPosition - curPosition != 0)) { //limit velocity
 
-    digitalWrite(ePin, LOW);
+        //set step direction
+        if (goPosition - curPosition > 0) {
+            sendDir(0);
+            curPosition += 1 / multiplier;
+        } else {
+            curPosition -= 1 / multiplier;
+            sendDir(1);
+        }
 
-    pinMode(MS0, OUTPUT);
-    pinMode(MS1, OUTPUT);
-    pinMode(MS2, OUTPUT);
+        sendStep();
 
-    //  InitMotorTimer();
+        lastStep = count1us;
+    }
 }
+void InitTimer(void) { // Prescaler = 1:1
+    // Period = 0x0FFF
+    T1CON = 0x8000;
+    IPC0 = IPC0 | 0x1000;
+    PR1 = 38;
 
+    OpenTimer1(T1_ON & T1_PS_1_1 & T1_SYNC_EXT_OFF & T1_SOURCE_INT & T1_GATE_OFF & T1_IDLE_STOP, PR1);
+    // Turn Timer1 interrupt ON
+    ConfigIntTimer1(T1_INT_PRIOR_7 & T1_INT_ON);
+}
+void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
+    //DisableIntT1; // Disable Timer1 interrupt 
+    //   TmrVal = OFFTime; // Set TmrVal = OFFTime
+    // T1CONbits.TCKPS = 1; // Change prescaler to 1:8
+    count1us = count1us + 1;
+    //WriteTimer1(5); // Setup Timer1 with the appropriate value to set the interrupt time
+    IFS0bits.T1IF = 0; // Reset Timer1 interrupt flag
+    //EnableIntT1; // Enable Timer1 interrupt
+}
+void sendStep() { // needs converted to interrupts
+    digitalWrite(stepPin, HIGH);
+    unsigned long now = count1us;
+    while (1) {
+        if (count1us > (2 + now)) break;
+    }// Still uses the DELAY
+    digitalWrite(stepPin, LOW);
+}
+void sendDir(unsigned setD) { //
+    digitalWrite(dirPin, setD);
+}
+void setControl(enum controls input) {
+    controlType = input;
+}
+void setVelocity(int vel) {
+    velocity = min(abs(vel), 30000);
+    deltaT = 1000000.0 / (steps_per_rev * multiplier * velocity);
+    if (vel < 0)
+        dir = 0;
+    else
+        dir = 1;
+}
+void setPosition(long pos) {
+    goPosition = pos;
+}
 void setStepping(enum microStepping stepChoice) {
     unsigned MSBPin = 0;
     unsigned midSBPin = 0;
@@ -205,47 +236,32 @@ void setStepping(enum microStepping stepChoice) {
     }
 
 }
+void Stepper_motor(int step_to_rev, unsigned dPin, unsigned sPin, int mSpeed, enum controls con, enum microStepping stepChoice, unsigned ePin, unsigned inMS0, unsigned inMS1, unsigned inMS2) {
+    steps_per_rev = step_to_rev;
+    dirPin = dPin;
+    stepPin = sPin;
+    maxSpeed = mSpeed;
+    dir = 0;
+    controlType = con;
+    setStepping(stepChoice);
+    goPosition = 0;
+    curPosition = 0;
+    velocity = 0;
+    lastStep = 0;
+    deltaT = 1000000.0 / (steps_per_rev * velocity);
+    MS0 = inMS0;
+    MS1 = inMS1;
+    MS2 = inMS2;
+    
+    pinMode(stepPin, OUTPUT);
+    pinMode(ePin, OUTPUT);
 
-void setPosition(long pos) {
-    goPosition = pos;
+    digitalWrite(ePin, LOW);
+
+    pinMode(MS0, OUTPUT);
+    pinMode(MS1, OUTPUT);
+    pinMode(MS2, OUTPUT);
 }
-
-void setVelocity(int vel) {
-    velocity = min(abs(vel), 30000);
-    deltaT = 1000000.0 / (steps_per_rev * multiplier * velocity);
-    if (vel < 0)
-        dir = 0;
-    else
-        dir = 1;
-}
-
-int min(int i1, int i2) {
-    if (i1 < i2) return i1;
-    else return i2;
-}
-
-int abs(int val) {
-    if (val < 0) return (val*-1);
-    else return val;
-}
-
-void setControl(enum controls input) {
-    controlType = input;
-}
-
-void sendStep() { // needs converted to interrupts
-    digitalWrite(stepPin, HIGH);
-    unsigned long now = count1us;
-    while (1) {
-        if (count1us > (2 + now)) break;
-    }// Still uses the DELAY
-    digitalWrite(stepPin, LOW);
-}
-
-void sendDir(unsigned setD) { //
-    digitalWrite(dirPin, setD);
-}
-
 void digitalWrite(unsigned pin, unsigned highLow) {
     switch (pin) {
         case 0:
@@ -331,7 +347,6 @@ void digitalWrite(unsigned pin, unsigned highLow) {
 
     }
 }
-
 void pinMode(unsigned pin, unsigned inOut) {
     switch (pin) {
         case 0:
@@ -416,58 +431,4 @@ void pinMode(unsigned pin, unsigned inOut) {
         
 
     }
-}
-
-void runOverhead() {
-
-    if (controlType) {
-        //velocity control
-        curPosition = 0;
-        switch (dir) {
-            case 0:
-                goPosition = -1;
-                break;
-            case 1:
-                goPosition = 1;
-                break;
-        }
-    }
-
-    //runStepControl
-    if (deltaT < (count1us - lastStep) && (goPosition - curPosition != 0)) { //limit velocity
-
-        //set step direction
-        if (goPosition - curPosition > 0) {
-            sendDir(0);
-            curPosition += 1 / multiplier;
-        } else {
-            curPosition -= 1 / multiplier;
-            sendDir(1);
-        }
-
-        sendStep();
-
-        lastStep = count1us;
-    }
-}
-
-void InitTimer(void) { // Prescaler = 1:1
-    // Period = 0x0FFF
-    T1CON = 0x8000;
-    IPC0 = IPC0 | 0x1000;
-    PR1 = 38;
-
-    OpenTimer1(T1_ON & T1_PS_1_1 & T1_SYNC_EXT_OFF & T1_SOURCE_INT & T1_GATE_OFF & T1_IDLE_STOP, PR1);
-    // Turn Timer1 interrupt ON
-    ConfigIntTimer1(T1_INT_PRIOR_7 & T1_INT_ON);
-}
-
-void __attribute__((interrupt, auto_psv)) _T1Interrupt(void) {
-    //DisableIntT1; // Disable Timer1 interrupt 
-    //   TmrVal = OFFTime; // Set TmrVal = OFFTime
-    // T1CONbits.TCKPS = 1; // Change prescaler to 1:8
-    count1us = count1us + 1;
-    //WriteTimer1(5); // Setup Timer1 with the appropriate value to set the interrupt time
-    IFS0bits.T1IF = 0; // Reset Timer1 interrupt flag
-    //EnableIntT1; // Enable Timer1 interrupt
 }

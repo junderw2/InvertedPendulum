@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=mainCode.c
+SOURCEFILES_QUOTED_IF_SPACED=mainCode.c supportFiles.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mainCode.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/mainCode.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mainCode.o ${OBJECTDIR}/supportFiles.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/mainCode.o.d ${OBJECTDIR}/supportFiles.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/mainCode.o
+OBJECTFILES=${OBJECTDIR}/mainCode.o ${OBJECTDIR}/supportFiles.o
 
 # Source Files
-SOURCEFILES=mainCode.c
+SOURCEFILES=mainCode.c supportFiles.c
 
 
 CFLAGS=
@@ -95,6 +95,13 @@ ${OBJECTDIR}/mainCode.o: mainCode.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  mainCode.c  -o ${OBJECTDIR}/mainCode.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mainCode.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/mainCode.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/supportFiles.o: supportFiles.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/supportFiles.o.d 
+	@${RM} ${OBJECTDIR}/supportFiles.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  supportFiles.c  -o ${OBJECTDIR}/supportFiles.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/supportFiles.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/supportFiles.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/mainCode.o: mainCode.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -102,6 +109,13 @@ ${OBJECTDIR}/mainCode.o: mainCode.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/mainCode.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  mainCode.c  -o ${OBJECTDIR}/mainCode.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mainCode.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/mainCode.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/supportFiles.o: supportFiles.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/supportFiles.o.d 
+	@${RM} ${OBJECTDIR}/supportFiles.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  supportFiles.c  -o ${OBJECTDIR}/supportFiles.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/supportFiles.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/supportFiles.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
