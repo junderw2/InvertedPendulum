@@ -10,19 +10,11 @@
 #include "timer.h"
 #include "adc.h"
 
-//_FOSCSEL(FNOSC_FRC & IESO_OFF);
-//_FOSC	(POSCMD_NONE & OSCIOFNC_ON & IOL1WAY_OFF & FCKSM_CSDCMD);
-//_FWDT	(FWDTEN_OFF & WINDIS_OFF & WDTPRE_PR32 & WDTPOST_PS1);
-//_FPOR	(FPWRT_PWR1 & ALTI2C_ON);
-//_FICD	(ICS_PGD1 & JTAGEN_OFF);
-
 _FGS(GWRP_OFF & GCP_OFF);
 _FOSCSEL(FNOSC_FRCPLL);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT);
 _FWDT(FWDTEN_OFF);
-
 //Global variables
-
 enum microStepping {
     FULL,
     HALF,
@@ -30,12 +22,10 @@ enum microStepping {
     EIGHTH,
     SIXTEENTH
 };
-
 enum controls {
     POSITION,
     VELOCITY
 };
-
 double degrees = 0;
 unsigned int ONTime = 0; // Variable used to control the RC Servo motor's Position			
 unsigned int OFFTime = 0; // Main variable used to control the period of the square wave	
@@ -69,25 +59,27 @@ unsigned long micros = 0;
 
 int potPosition = 0;
 int potPosition1 = 0;
-
+/*These funtions are standalone and are defined in the supporting files*/
+double map(double value, float x_min, float x_max, float y_min, float y_max);
+int min(int, int);
+int abs(int);
 void InitIO(void);
+/************************************************************************/
+/*These functions are defined below main*/
 void ADC(void);
 void InitTimer(void);
-
-double map(double value, float x_min, float x_max, float y_min, float y_max);
 void InitMotorTimer();
 void Stepper_motor(int, unsigned, unsigned, int, enum controls, enum microStepping, unsigned, unsigned, unsigned, unsigned);
 void setStepping(enum microStepping);
 void setPosition(long);
 void setVelocity(int);
-int min(int, int);
-int abs(int);
 void setControl(enum controls);
 void sendStep();
 void sendDir(unsigned);
 void digitalWrite(unsigned, unsigned);
 void pinMode(unsigned, unsigned);
 void runOverhead();
+/*****************************************/
 
 int main(void) {
     /* Configure Oscillator to operate the device at 40MHz.
@@ -113,6 +105,7 @@ int main(void) {
     }
     return 0;
 }
+
 void ADC(void) { // 12-bit sampling
     // Use dedicated ADC RC oscillator
     // Automatically start new conversion after previous
